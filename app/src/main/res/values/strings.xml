@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Tabrik va She\'rlar</string>
+    <string name="tabrik">Tabrik va She\'rlar</string>
+    <string name="home">Asosiy</string>
+    <string name="fav">Saqlanganlar</string>
+    <string name="info">Ilova Haqida</string>
+    <string name="detail">Detail</string>
+    <string name="app_color">Ilova rangi</string>
+    <string name="not_saved">Saqlanganlar yo\'q</string>
+    <string name="fon_color">Fon</string>
+
+    <string name="rate">Ilovani baholash</string>
+    <string name="dev">Dasturchi</string>
+    <string name="share">Ulashish</string>
+    <string name="proverb">Maqollar</string>
+    <string name="agatha">Audio Hikoya</string>
+    <string name="astra">Astranomiya</string>
+    <string name="draw">Draw Shape</string>
+    <string name="other">Boshqa ilovalar</string>
+</resources>
