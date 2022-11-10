@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sdk.jetcongrats.MainActivity
 import com.sdk.jetcongrats.presentation.component.BottomBar
 import com.sdk.jetcongrats.presentation.component.MyIconButton
@@ -29,7 +30,7 @@ import com.sdk.jetcongrats.util.shareThisApp
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(navController: NavHostController, color: Color, backColor: Color) {
+fun MainScreen(navController: NavHostController = rememberNavController(), color: Color, backColor: Color) {
     var title by remember {
         mutableStateOf("")
     }
