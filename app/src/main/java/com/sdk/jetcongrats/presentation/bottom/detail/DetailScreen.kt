@@ -1,16 +1,15 @@
 package com.sdk.jetcongrats.presentation.bottom.detail
 
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
@@ -20,8 +19,14 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sdk.jetcongrats.R
+import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.presentation.bottom.settings.SettingsViewModel
-import com.sdk.jetcongrats.ui.theme.Grey10
+import com.sdk.jetcongrats.presentation.component.Error
+import com.sdk.jetcongrats.presentation.component.Loading
+import com.sdk.jetcongrats.presentation.component.MyIconButton
+import com.sdk.jetcongrats.ui.theme.*
+import com.sdk.jetcongrats.util.ColorObject.TAG
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,45 +37,62 @@ fun DetailScreen(title: String, id: String) {
     val viewModel: SettingsViewModel = hiltViewModel()
     val color by animateColorAsState(targetValue = viewModel.color.value)
     val backColor by animateColorAsState(targetValue = if (viewModel.backColor.value) Grey10 else Color.White)
-    detailViewModel.whichItem(id)
+    LaunchedEffect(key1 = Unit) {
+        detailViewModel.whichItem(id)
+    }
     val state by remember {
         detailViewModel.state
     }
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        scaffoldState = scaffoldState,
-        backgroundColor = backColor
-    ) {
-        LazyColumn(
-            contentPadding = PaddingValues(2.dp)
+    if (state.loading) {
+        Loading(color)
+    }
+    if (state.error.isNotBlank()) {
+        Error(state.error)
+    }
+    state.success?.let { list ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            scaffoldState = scaffoldState,
+            backgroundColor = backColor
         ) {
-//            itemsIndexed(list) { index, item ->
-//                ItemCard(
-//                    index = index,
-//                    title = item,
-//                    color = color,
-//                    onClick = {
-//                        if (it) {
-//                            coroutineScope.launch {
-//                                detailViewModel.saveItemData(ItemEntity(0, title, item, id))
-//                                scaffoldState.snackbarHostState.showSnackbar(
-//                                    "Saqlandi"
-//                                )
-//                            }
-//                        } else {
-//                            coroutineScope.launch {
-//                                detailViewModel.copyText(item)
-//                                scaffoldState.snackbarHostState.showSnackbar(
-//                                    "Nusxalandi"
-//                                )
-//                            }
-//                        }
-//                    }
-//                )
-//            }
+            LazyColumn(
+                contentPadding = PaddingValues(2.dp)
+            ) {
+                itemsIndexed(list) { index, item ->
+                    ItemCard(
+                        index = index,
+                        title = item.title,
+                        color = color,
+                        onClick = {
+                            if (it) {
+                                coroutineScope.launch {
+                                    detailViewModel.saveToFavorite(
+                                        FavoriteData(
+                                            title,
+                                            item.title,
+                                            id
+                                        )
+                                    )
+                                    scaffoldState.snackbarHostState.showSnackbar(
+                                        "Saqlandi"
+                                    )
+                                }
+                            } else {
+                                coroutineScope.launch {
+                                    detailViewModel.copyText(item.title)
+                                    scaffoldState.snackbarHostState.showSnackbar(
+                                        "Nusxalandi"
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
         }
     }
 }
+
 
 @Composable
 fun ItemCard(

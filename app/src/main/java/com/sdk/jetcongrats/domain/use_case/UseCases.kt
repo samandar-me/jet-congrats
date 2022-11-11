@@ -7,5 +7,6 @@ data class UseCases(
     val getBackColorUseCase: GetBackColorUseCase,
     val getColorUseCase: GetColorUseCase,
     val saveBackColorUseCase: SaveBackColorUseCase,
-    val saveColorUseCase: SaveColorUseCase
+    val saveColorUseCase: SaveColorUseCase,
+    val getAllFavoritesUseCase: GetAllFavoritesUseCase
 )

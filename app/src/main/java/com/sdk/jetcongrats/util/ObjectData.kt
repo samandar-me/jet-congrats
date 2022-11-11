@@ -7,6 +7,7 @@ import com.sdk.jetcongrats.ui.theme.*
 import com.sdk.jetcongrats.presentation.component.MenuItem
 
 object ColorObject {
+    const val TAG = "@@@Jet"
     val colorList = listOf(
         BlueViolet3,
         OrangeYellow3,
@@ -18,27 +19,27 @@ object ColorObject {
 
     fun items() = listOf(
         BoxFeature(
-            id = "0",
+            id = "weddings",
             title = "To'y tabriklari"
         ),
         BoxFeature(
-            id = "1",
+            id = "proverbs",
             title = "Maqollar"
         ),
         BoxFeature(
-            id = "2",
+            id = "boy",
             title = "Tug'ilgan kun tabrigi\n(O'gil bola uchun)"
         ),
         BoxFeature(
-            id = "3",
+            id = "girl",
             title = "Tug'ilgan kun tabrigi\n(Qiz bola uchun)"
         ),
         BoxFeature(
-            id = "4",
+            id = "riddle",
             title = "Topishmoqlar"
         ),
         BoxFeature(
-            id = "5",
+            id = "quickly",
             title = "Tez aytishlar"
         )
     )

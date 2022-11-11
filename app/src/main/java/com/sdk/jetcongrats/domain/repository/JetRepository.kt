@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface JetRepository {
     suspend fun getAllData(collectionName: String): Flow<Response<List<Data>>>
     suspend fun saveFavorite(favoriteData: FavoriteData): Flow<Response<Boolean>>
+    suspend fun getAllFavorites(): Flow<Response<List<FavoriteData>>>
     suspend fun saveColor(int: Int)
     suspend fun getColor(): Flow<Int>
     fun copyText(text: String)

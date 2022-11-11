@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.sdk.jetcongrats.R
+import com.sdk.jetcongrats.presentation.bottom.settings.SettingsViewModel
 import com.sdk.jetcongrats.ui.theme.TextColor
 import com.sdk.jetcongrats.util.Graph
 import kotlinx.coroutines.delay
@@ -28,7 +29,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController) {
     var startAnimation by remember { mutableStateOf(false) }
-   // val color by animateColorAsState(targetValue = viewModel.color.value)
+    val viewModel: SettingsViewModel = hiltViewModel()
+    val color by animateColorAsState(targetValue = viewModel.color.value)
     val alphaAnim = animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(
@@ -42,7 +44,7 @@ fun SplashScreen(navController: NavHostController) {
         navController.popBackStack()
         navController.navigate(Graph.HOME)
     }
-    Splash(alpha = alphaAnim.value, color = Color.Black)
+    Splash(alpha = alphaAnim.value, color = color)
 }
 
 @Composable

@@ -56,7 +56,8 @@ object JetModule {
             getBackColorUseCase = GetBackColorUseCase(repository),
             getColorUseCase = GetColorUseCase(repository),
             saveBackColorUseCase = SaveBackColorUseCase(repository),
-            saveColorUseCase = SaveColorUseCase(repository)
+            saveColorUseCase = SaveColorUseCase(repository),
+            getAllFavoritesUseCase = GetAllFavoritesUseCase(repository)
         )
     }
 }

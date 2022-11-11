@@ -1,33 +1,31 @@
-package com.sdk.jetcongrats.presentation.bottom.detail
+package com.sdk.jetcongrats.presentation.bottom.favorite
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sdk.jetcongrats.data.BoxFeature
-import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.use_case.UseCases
-import com.sdk.jetcongrats.util.ColorObject.TAG
 import com.sdk.jetcongrats.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
+class FavoriteViewModel @Inject constructor(
     private val useCases: UseCases
 ) : ViewModel() {
-    private val _state: MutableState<DetailState> = mutableStateOf(DetailState())
-    val state: State<DetailState> get() = _state
+    private val _state: MutableState<FavoriteState> = mutableStateOf(FavoriteState())
+    val state: State<FavoriteState> get() = _state
 
-    fun whichItem(id: String) {
+    init {
+        getAllFavoriteList()
+    }
+
+    private fun getAllFavoriteList() {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
-            delay(400L)
-            useCases.getDataUseCase.invoke(id).collect {
+            useCases.getAllFavoritesUseCase.invoke().collect {
                 when (it) {
                     is Response.Loading -> Unit
                     is Response.Error -> _state.value =
@@ -37,16 +35,5 @@ class DetailViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun saveToFavorite(favoriteData: FavoriteData) {
-        viewModelScope.launch {
-            useCases.uploadFavoriteUseCase.invoke(favoriteData).collect {
-                Log.d("AAAAAAAA", it.toString())
-            }
-        }
-    }
-    fun copyText(text: String) {
-        useCases.copyTextUseCase.invoke(text)
     }
 }

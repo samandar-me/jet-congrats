@@ -97,4 +97,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.6.0-alpha03")
 
     implementation 'com.github.angads25:toggle:1.1.0'
+
+    implementation "com.airbnb.android:lottie-compose:5.2.0"
 }

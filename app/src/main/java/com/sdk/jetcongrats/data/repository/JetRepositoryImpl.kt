@@ -1,13 +1,16 @@
 package com.sdk.jetcongrats.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sdk.jetcongrats.data.manager.DataStoreManager
 import com.sdk.jetcongrats.data.manager.MyClipBoardManager
 import com.sdk.jetcongrats.domain.model.Data
 import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.repository.JetRepository
+import com.sdk.jetcongrats.util.ColorObject.TAG
 import com.sdk.jetcongrats.util.Response
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
@@ -48,10 +51,28 @@ class JetRepositoryImpl @Inject constructor(
             if (operationSuccessful) {
                 Response.Success(operationSuccessful)
             } else {
-                Response.Success("Error")
+                Response.Error("Error")
             }
         } catch (e: Exception) {
-            emit(Response.Error(e.stackTraceToString().toString()))
+            Log.d(TAG, "saveFavorite: ${e.message}")
+            emit(Response.Error(e.stackTraceToString()))
+        }
+    }
+
+    override suspend fun getAllFavorites(): Flow<Response<List<FavoriteData>>> = callbackFlow {
+        Response.Loading
+        val snap = fireStore.collection("favorites")
+            .addSnapshotListener { snapShot, error ->
+                val response = if (snapShot != null) {
+                    val dataList = snapShot.toObjects(FavoriteData::class.java)
+                    Response.Success(dataList)
+                } else {
+                    Response.Error(error?.stackTraceToString().toString())
+                }
+                trySend(response).isSuccess
+            }
+        awaitClose {
+            snap.remove()
         }
     }
 
