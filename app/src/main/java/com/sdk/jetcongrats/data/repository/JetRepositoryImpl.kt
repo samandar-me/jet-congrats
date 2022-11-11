@@ -59,6 +59,14 @@ class JetRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteFavorite(favoriteData: FavoriteData) {
+        try {
+            fireStore.collection("favorites").document().delete()
+        } catch (e: Exception) {
+            Log.d(TAG, "deleteFavorite: ${e.message}")
+        }
+    }
+
     override suspend fun getAllFavorites(): Flow<Response<List<FavoriteData>>> = callbackFlow {
         Response.Loading
         val snap = fireStore.collection("favorites")

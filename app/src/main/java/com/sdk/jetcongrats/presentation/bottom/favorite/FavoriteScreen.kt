@@ -68,9 +68,15 @@ fun FavoriteScreen(navController: NavHostController, color: Color, backColor: Co
                         color = color,
                         onClick = { bool ->
                             if (bool) {
-
+                                coroutineScope.launch {
+                                    viewModel.copyText(it.text)
+                                    scaffoldState.snackbarHostState.showSnackbar("Nusxalandi")
+                                }
                             } else {
-
+                                coroutineScope.launch {
+                                    viewModel.deleteFromFavorite(it)
+                                    scaffoldState.snackbarHostState.showSnackbar("O'chirildi")
+                                }
                             }
                         },
                         onItemClick = {

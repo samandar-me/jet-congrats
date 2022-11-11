@@ -26,7 +26,7 @@ class DetailViewModel @Inject constructor(
     fun whichItem(id: String) {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
-            delay(400L)
+            delay(300L)
             useCases.getDataUseCase.invoke(id).collect {
                 when (it) {
                     is Response.Loading -> Unit
@@ -41,11 +41,10 @@ class DetailViewModel @Inject constructor(
 
     fun saveToFavorite(favoriteData: FavoriteData) {
         viewModelScope.launch {
-            useCases.uploadFavoriteUseCase.invoke(favoriteData).collect {
-                Log.d("AAAAAAAA", it.toString())
-            }
+            useCases.uploadFavoriteUseCase.invoke(favoriteData)
         }
     }
+
     fun copyText(text: String) {
         useCases.copyTextUseCase.invoke(text)
     }

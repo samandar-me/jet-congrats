@@ -5,6 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.use_case.UseCases
 import com.sdk.jetcongrats.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,5 +36,14 @@ class FavoriteViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun deleteFromFavorite(favoriteData: FavoriteData) {
+        viewModelScope.launch {
+            useCases.deleteFavoriteUseCase.invoke(favoriteData)
+        }
+    }
+    fun copyText(text: String) {
+        useCases.copyTextUseCase.invoke(text)
     }
 }
