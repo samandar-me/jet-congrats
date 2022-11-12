@@ -44,9 +44,6 @@ fun FavoriteScreen(navController: NavHostController, color: Color, backColor: Co
     if (state.loading) {
         Loading(color = color)
     }
-    if (state.error.isNotBlank()) {
-        Error(state.error)
-    }
     state.success?.let { list ->
         Scaffold(
             modifier = Modifier
@@ -66,17 +63,15 @@ fun FavoriteScreen(navController: NavHostController, color: Color, backColor: Co
                         from = it.from,
                         title = it.text,
                         color = color,
-                        onClick = { bool ->
-                            if (bool) {
-                                coroutineScope.launch {
-                                    viewModel.copyText(it.text)
-                                    scaffoldState.snackbarHostState.showSnackbar("Nusxalandi")
-                                }
-                            } else {
-                                coroutineScope.launch {
-                                    viewModel.deleteFromFavorite(it)
-                                    scaffoldState.snackbarHostState.showSnackbar("O'chirildi")
-                                }
+                        onCopyClick = {
+                            coroutineScope.launch {
+                                viewModel.copyText(it.text)
+                                scaffoldState.snackbarHostState.showSnackbar("Nusxalandi")
+                            }
+                        },
+                        onDeleteClick = {
+                            coroutineScope.launch {
+                                viewModel.deleteFromFavorite(it)
                             }
                         },
                         onItemClick = {
@@ -96,7 +91,8 @@ fun CardItem(
     from: String,
     title: String,
     color: Color,
-    onClick: (Boolean) -> Unit,
+    onCopyClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     onItemClick: () -> Unit
 ) {
     val contains by remember {
@@ -163,11 +159,11 @@ fun CardItem(
                     .padding(horizontal = 2.dp), horizontalArrangement = Arrangement.End
             ) {
                 MyIconButton(icon = painterResource(id = R.drawable.ic_baseline_content_copy)) {
-                    onClick(true)
+                    onCopyClick()
                 }
                 Spacer(modifier = Modifier.width(3.dp))
                 MyIconButton(icon = Icons.Outlined.Delete) {
-                    onClick(false)
+                    onDeleteClick()
                 }
             }
         }

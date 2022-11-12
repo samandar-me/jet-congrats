@@ -1,5 +1,6 @@
 package com.sdk.jetcongrats
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
@@ -12,10 +13,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.sdk.jetcongrats.presentation.bottom.settings.SettingsViewModel
@@ -37,11 +42,18 @@ class MainActivity : ComponentActivity() {
                 color = color,
                 backColor = backColor
             )
-            val window: Window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window.statusBarColor = android.graphics.Color.rgb(color.red, color.green, color.blue)
-            }
+            BarColorsTheme(color = color)
+        }
+    }
+}
+
+@Composable
+fun BarColorsTheme(color: Color) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = color.toArgb()
         }
     }
 }

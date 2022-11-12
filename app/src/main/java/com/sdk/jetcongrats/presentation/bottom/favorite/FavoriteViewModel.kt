@@ -9,6 +9,7 @@ import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.use_case.UseCases
 import com.sdk.jetcongrats.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,14 +27,9 @@ class FavoriteViewModel @Inject constructor(
     private fun getAllFavoriteList() {
         viewModelScope.launch {
             _state.value = _state.value.copy(loading = true)
+            delay(200L)
             useCases.getAllFavoritesUseCase.invoke().collect {
-                when (it) {
-                    is Response.Loading -> Unit
-                    is Response.Error -> _state.value =
-                        _state.value.copy(loading = false, error = it.error)
-                    is Response.Success -> _state.value =
-                        _state.value.copy(loading = false, success = it.data)
-                }
+                _state.value = _state.value.copy(loading = false, success = it)
             }
         }
     }
@@ -43,6 +39,7 @@ class FavoriteViewModel @Inject constructor(
             useCases.deleteFavoriteUseCase.invoke(favoriteData)
         }
     }
+
     fun copyText(text: String) {
         useCases.copyTextUseCase.invoke(text)
     }

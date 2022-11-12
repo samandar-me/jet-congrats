@@ -1,15 +1,12 @@
 package com.sdk.jetcongrats.presentation.bottom.detail
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sdk.jetcongrats.data.BoxFeature
 import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.use_case.UseCases
-import com.sdk.jetcongrats.util.ColorObject.TAG
 import com.sdk.jetcongrats.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -41,7 +38,7 @@ class DetailViewModel @Inject constructor(
 
     fun saveToFavorite(favoriteData: FavoriteData) {
         viewModelScope.launch {
-            useCases.uploadFavoriteUseCase.invoke(favoriteData)
+            useCases.saveFavoriteUseCase.invoke(favoriteData)
         }
     }
 

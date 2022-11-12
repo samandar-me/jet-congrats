@@ -2,7 +2,7 @@ package com.sdk.jetcongrats.domain.use_case
 
 data class UseCases(
     val getDataUseCase: GetDataUseCase,
-    val uploadFavoriteUseCase: UploadFavoriteUseCase,
+    val saveFavoriteUseCase: SaveFavoriteUseCase,
     val copyTextUseCase: CopyTextUseCase,
     val getBackColorUseCase: GetBackColorUseCase,
     val getColorUseCase: GetColorUseCase,

@@ -28,7 +28,7 @@ object ColorObject {
         ),
         BoxFeature(
             id = "boy",
-            title = "Tug'ilgan kun tabrigi\n(O'gil bola uchun)"
+            title = "Tug'ilgan kun tabrigi\n(O'g'il bola uchun)"
         ),
         BoxFeature(
             id = "girl",

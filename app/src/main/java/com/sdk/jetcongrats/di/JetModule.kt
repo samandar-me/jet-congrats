@@ -1,7 +1,10 @@
 package com.sdk.jetcongrats.di
 
 import android.content.Context
+import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
+import com.sdk.jetcongrats.data.database.FavoriteDao
+import com.sdk.jetcongrats.data.database.FavoriteDatabase
 import com.sdk.jetcongrats.data.manager.DataStoreManager
 import com.sdk.jetcongrats.data.manager.MyClipBoardManager
 import com.sdk.jetcongrats.data.repository.JetRepositoryImpl
@@ -20,12 +23,31 @@ object JetModule {
 
     @Provides
     @Singleton
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ): FavoriteDatabase {
+        return Room.databaseBuilder(
+            context,
+            FavoriteDatabase::class.java,
+            "Fav.db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteDao(database: FavoriteDatabase): FavoriteDao {
+        return database.dao
+    }
+
+    @Provides
+    @Singleton
     fun provideJetRepository(
         firestore: FirebaseFirestore,
         dataStoreManager: DataStoreManager,
-        myClipBoardManager: MyClipBoardManager
+        myClipBoardManager: MyClipBoardManager,
+        dao: FavoriteDao
     ): JetRepository {
-        return JetRepositoryImpl(firestore, dataStoreManager, myClipBoardManager)
+        return JetRepositoryImpl(firestore, dataStoreManager, myClipBoardManager, dao)
     }
 
     @Provides
@@ -51,7 +73,7 @@ object JetModule {
     fun provideAllUseCases(repository: JetRepository): UseCases {
         return UseCases(
             getDataUseCase = GetDataUseCase(repository),
-            uploadFavoriteUseCase = UploadFavoriteUseCase(repository),
+            saveFavoriteUseCase = SaveFavoriteUseCase(repository),
             copyTextUseCase = CopyTextUseCase(repository),
             getBackColorUseCase = GetBackColorUseCase(repository),
             getColorUseCase = GetColorUseCase(repository),

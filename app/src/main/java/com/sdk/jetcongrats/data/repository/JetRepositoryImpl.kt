@@ -2,6 +2,7 @@ package com.sdk.jetcongrats.data.repository
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.sdk.jetcongrats.data.database.FavoriteDao
 import com.sdk.jetcongrats.data.manager.DataStoreManager
 import com.sdk.jetcongrats.data.manager.MyClipBoardManager
 import com.sdk.jetcongrats.domain.model.Data
@@ -20,9 +21,9 @@ import javax.inject.Inject
 class JetRepositoryImpl @Inject constructor(
     private val fireStore: FirebaseFirestore,
     private val dataStoreManager: DataStoreManager,
-    private val clipBoardManager: MyClipBoardManager
+    private val clipBoardManager: MyClipBoardManager,
+    private val dao: FavoriteDao
 ) : JetRepository {
-    private var operationSuccessful = false
     override suspend fun getAllData(collectionName: String): Flow<Response<List<Data>>> =
         callbackFlow {
             Response.Loading
@@ -41,47 +42,16 @@ class JetRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun saveFavorite(favoriteData: FavoriteData): Flow<Response<Boolean>> = flow {
-        operationSuccessful = false
-        try {
-            fireStore.collection("favorites").document().set(favoriteData)
-                .addOnSuccessListener {
-                    operationSuccessful = true
-                }.await()
-            if (operationSuccessful) {
-                Response.Success(operationSuccessful)
-            } else {
-                Response.Error("Error")
-            }
-        } catch (e: Exception) {
-            Log.d(TAG, "saveFavorite: ${e.message}")
-            emit(Response.Error(e.stackTraceToString()))
-        }
+    override suspend fun saveFavorite(favoriteData: FavoriteData) {
+        dao.saveFavorite(favoriteData)
     }
 
     override suspend fun deleteFavorite(favoriteData: FavoriteData) {
-        try {
-            fireStore.collection("favorites").document().delete()
-        } catch (e: Exception) {
-            Log.d(TAG, "deleteFavorite: ${e.message}")
-        }
+        dao.deleteFavorite(favoriteData)
     }
 
-    override suspend fun getAllFavorites(): Flow<Response<List<FavoriteData>>> = callbackFlow {
-        Response.Loading
-        val snap = fireStore.collection("favorites")
-            .addSnapshotListener { snapShot, error ->
-                val response = if (snapShot != null) {
-                    val dataList = snapShot.toObjects(FavoriteData::class.java)
-                    Response.Success(dataList)
-                } else {
-                    Response.Error(error?.stackTraceToString().toString())
-                }
-                trySend(response).isSuccess
-            }
-        awaitClose {
-            snap.remove()
-        }
+    override fun getAllFavorites(): Flow<List<FavoriteData>> {
+        return dao.getAllFavorites()
     }
 
     override suspend fun saveColor(int: Int) {

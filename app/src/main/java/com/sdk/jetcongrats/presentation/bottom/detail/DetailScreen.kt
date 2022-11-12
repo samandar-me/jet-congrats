@@ -63,27 +63,26 @@ fun DetailScreen(title: String, id: String) {
                         index = index,
                         title = item.title,
                         color = color,
-                        onClick = {
-                            if (it) {
-                                coroutineScope.launch {
-                                    detailViewModel.saveToFavorite(
-                                        FavoriteData(
-                                            title,
-                                            item.title,
-                                            id
-                                        )
+                        onCopyClick = {
+                            coroutineScope.launch {
+                                detailViewModel.copyText(item.title)
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    "Nusxalandi"
+                                )
+                            }
+                        },
+                        onSaveClick = {
+                            coroutineScope.launch {
+                                detailViewModel.saveToFavorite(
+                                    FavoriteData(
+                                        from = title,
+                                        text = item.title,
+                                        itemId = id
                                     )
-                                    scaffoldState.snackbarHostState.showSnackbar(
-                                        "Saqlandi"
-                                    )
-                                }
-                            } else {
-                                coroutineScope.launch {
-                                    detailViewModel.copyText(item.title)
-                                    scaffoldState.snackbarHostState.showSnackbar(
-                                        "Nusxalandi"
-                                    )
-                                }
+                                )
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    "Saqlandi"
+                                )
                             }
                         }
                     )
@@ -99,7 +98,8 @@ fun ItemCard(
     index: Int,
     title: String,
     color: Color,
-    onClick: (isFor: Boolean) -> Unit
+    onSaveClick: () -> Unit,
+    onCopyClick: () -> Unit
 ) {
     val contains by remember {
         mutableStateOf(title.contains("#"))
@@ -165,11 +165,11 @@ fun ItemCard(
                     .padding(horizontal = 2.dp), horizontalArrangement = Arrangement.End
             ) {
                 MyIconButton(icon = painterResource(id = R.drawable.ic_baseline_save_alt)) {
-                    onClick(true)
+                    onSaveClick()
                 }
                 Spacer(modifier = Modifier.width(3.dp))
                 MyIconButton(icon = painterResource(id = R.drawable.ic_baseline_content_copy)) {
-                    onClick(false)
+                    onCopyClick()
                 }
             }
         }
