@@ -58,7 +58,7 @@ fun FavoriteScreen(navController: NavHostController, color: Color, backColor: Co
             LazyColumn(
                 contentPadding = PaddingValues(2.dp)
             ) {
-                items(items = list) {
+                items(items = list, key = { it.id }) {
                     CardItem(
                         from = it.from,
                         title = it.text,
