@@ -14,7 +14,7 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveFavorite(favoriteData: FavoriteData)
 
-    @Query("SELECT * FROM Favorites ORDER BY id ASC")
+    @Query("SELECT * FROM Favorites ORDER BY id DESC")
     fun getAllFavorites(): Flow<List<FavoriteData>>
 
     @Delete

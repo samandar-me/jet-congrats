@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.use_case.UseCases
-import com.sdk.jetcongrats.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

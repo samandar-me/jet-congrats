@@ -1,6 +1,5 @@
 package com.sdk.jetcongrats.presentation.bottom.favorite
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,10 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import com.sdk.jetcongrats.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
@@ -26,11 +23,11 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.sdk.jetcongrats.R
 import com.sdk.jetcongrats.presentation.component.Loading
 import com.sdk.jetcongrats.presentation.component.MyIconButton
 import com.sdk.jetcongrats.ui.theme.*
 import com.sdk.jetcongrats.util.Graph
-import com.sdk.jetcongrats.presentation.component.Error
 import kotlinx.coroutines.launch
 
 @Composable
@@ -137,7 +134,7 @@ fun CardItem(
                     .fillMaxWidth()
                     .padding(start = 10.dp),
                 color = TextColor,
-                fontSize = 18.sp,
+                fontSize = 17.sp,
                 fontFamily = BoldFont
             )
             Spacer(modifier = Modifier.height(7.dp))

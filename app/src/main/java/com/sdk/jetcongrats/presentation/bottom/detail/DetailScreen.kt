@@ -1,15 +1,16 @@
 package com.sdk.jetcongrats.presentation.bottom.detail
 
-import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
@@ -25,8 +26,10 @@ import com.sdk.jetcongrats.presentation.bottom.settings.SettingsViewModel
 import com.sdk.jetcongrats.presentation.component.Error
 import com.sdk.jetcongrats.presentation.component.Loading
 import com.sdk.jetcongrats.presentation.component.MyIconButton
-import com.sdk.jetcongrats.ui.theme.*
-import com.sdk.jetcongrats.util.ColorObject.TAG
+import com.sdk.jetcongrats.ui.theme.BoldFont
+import com.sdk.jetcongrats.ui.theme.Grey10
+import com.sdk.jetcongrats.ui.theme.Grey90
+import com.sdk.jetcongrats.ui.theme.TextColor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -143,7 +146,7 @@ fun ItemCard(
                     .fillMaxWidth()
                     .padding(start = 10.dp),
                 color = TextColor,
-                fontSize = 18.sp,
+                fontSize = 17.sp,
                 fontFamily = BoldFont
             )
             Spacer(modifier = Modifier.height(7.dp))

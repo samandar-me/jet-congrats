@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -28,8 +29,6 @@ import com.sdk.jetcongrats.R
 import com.sdk.jetcongrats.presentation.component.RoundButton
 import com.sdk.jetcongrats.presentation.component.SettingItem
 import com.sdk.jetcongrats.ui.theme.BoldFont
-import com.sdk.jetcongrats.ui.theme.Grey20
-import com.sdk.jetcongrats.ui.theme.Grey95
 import com.sdk.jetcongrats.util.ColorObject
 
 @Composable
@@ -40,88 +39,89 @@ fun SettingsScreen() {
     }
     val stokeColor by animateColorAsState(targetValue = if (isChecked) Color.White else Color.Black)
     val backColor by animateColorAsState(targetValue = viewModel.color.value)
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(5.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    LazyColumn(
+        contentPadding = PaddingValues(4.dp)
     ) {
-        SettingItem(color = backColor, height = 150.dp) {
-            Text(
-                text = stringResource(id = R.string.app_color),
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontFamily = BoldFont,
-                fontSize = 20.sp
-            )
-            Spacer(modifier = Modifier.height(25.dp))
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                contentPadding = PaddingValues(vertical = 10.dp, horizontal = 8.dp)
-            ) {
-                itemsIndexed(ColorObject.colorList) { index, item ->
-                    RoundButton(
-                        color = item,
-                        modifier = Modifier
-                            .border(
-                                width = 2.dp,
-                                color = if (viewModel.color.value == item) stokeColor else Color.Transparent,
-                                shape = CircleShape
-                            )
-                    ) {
-                        viewModel.saveColor(index)
+        item {
+            SettingItem(color = backColor, height = 150.dp) {
+                Text(
+                    text = stringResource(id = R.string.app_color),
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    fontFamily = BoldFont,
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.height(25.dp))
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    contentPadding = PaddingValues(vertical = 10.dp, horizontal = 8.dp)
+                ) {
+                    itemsIndexed(ColorObject.colorList) { index, item ->
+                        RoundButton(
+                            color = item,
+                            modifier = Modifier
+                                .border(
+                                    width = 2.dp,
+                                    color = if (viewModel.color.value == item) stokeColor else Color.Transparent,
+                                    shape = CircleShape
+                                )
+                        ) {
+                            viewModel.saveColor(index)
+                        }
                     }
                 }
             }
         }
-        SettingItem(height = 250.dp, color = backColor) {
-            Spacer(modifier = Modifier.padding(top = 5.dp))
-            Text(
-                text = stringResource(id = R.string.fon_color),
-                textAlign = TextAlign.Center,
-                color = Color.White,
-                fontFamily = BoldFont,
-                fontSize = 20.sp
-            )
-            Spacer(modifier = Modifier.height(25.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(150.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(if (!isChecked) Color.White else backColor)
-                        .clickable {
-                            viewModel.saveBackColor(false)
-                        }
+        item {
+            SettingItem(height = 250.dp, color = backColor) {
+                Spacer(modifier = Modifier.padding(top = 5.dp))
+                Text(
+                    text = stringResource(id = R.string.fon_color),
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    fontFamily = BoldFont,
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.height(25.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.day),
-                        contentDescription = "Day",
-                        modifier = Modifier.size(90.dp),
-                        tint = Color.Black
-                    )
-                }
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(150.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(if (isChecked) Color.White else backColor)
-                        .clickable {
-                            viewModel.saveBackColor(true)
-                        }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.night),
-                        contentDescription = "Night",
-                        modifier = Modifier.size(90.dp),
-                        tint = Color.Black
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(150.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (!isChecked) Color.White else backColor)
+                            .clickable {
+                                viewModel.saveBackColor(false)
+                            }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.day),
+                            contentDescription = "Day",
+                            modifier = Modifier.size(80.dp),
+                            tint = Color.Black
+                        )
+                    }
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(150.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(if (isChecked) Color.White else backColor)
+                            .clickable {
+                                viewModel.saveBackColor(true)
+                            }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.night),
+                            contentDescription = "Night",
+                            modifier = Modifier.size(80.dp),
+                            tint = Color.Black
+                        )
+                    }
                 }
             }
         }

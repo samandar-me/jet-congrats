@@ -1,6 +1,5 @@
 package com.sdk.jetcongrats.data.repository
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sdk.jetcongrats.data.database.FavoriteDao
 import com.sdk.jetcongrats.data.manager.DataStoreManager
@@ -8,14 +7,10 @@ import com.sdk.jetcongrats.data.manager.MyClipBoardManager
 import com.sdk.jetcongrats.domain.model.Data
 import com.sdk.jetcongrats.domain.model.FavoriteData
 import com.sdk.jetcongrats.domain.repository.JetRepository
-import com.sdk.jetcongrats.util.ColorObject.TAG
 import com.sdk.jetcongrats.util.Response
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class JetRepositoryImpl @Inject constructor(
