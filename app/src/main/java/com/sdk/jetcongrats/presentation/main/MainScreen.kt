@@ -116,7 +116,7 @@ fun MainScreen(navController: NavHostController = rememberNavController(), color
                 items = menuList(),
                 onItemClick = {
                     when(it.id) {
-                        0 -> context.intent(Constants.URL)
+                        0 -> context.intent("${Constants.URL}${context.packageName}")
                         1 -> context.intent(Constants.USER_NAME)
                         2 -> context.shareThisApp()
                         3 -> context.intent(Constants.PROVERBS)

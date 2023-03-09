@@ -107,11 +107,11 @@ object ColorObject {
             title = R.string.agatha,
             icon = R.drawable.ic_baseline_music_note
         ),
-        MenuItem(
-            id = 5,
-            title = R.string.astra,
-            icon = R.drawable.ic_baseline_rocket_launch
-        ),
+//        MenuItem(
+//            id = 5,
+//            title = R.string.astra,
+//            icon = R.drawable.ic_baseline_rocket_launch
+//        ),
         MenuItem(
             id = 6,
             title = R.string.draw,
