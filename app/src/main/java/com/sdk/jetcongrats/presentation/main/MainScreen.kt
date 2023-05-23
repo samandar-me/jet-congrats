@@ -119,10 +119,6 @@ fun MainScreen(navController: NavHostController = rememberNavController(), color
                         0 -> context.intent("${Constants.URL}${context.packageName}")
                         1 -> context.intent(Constants.USER_NAME)
                         2 -> context.shareThisApp()
-                        3 -> context.intent(Constants.PROVERBS)
-                        4 -> context.intent(Constants.AGATHA)
-                        5 -> context.intent(Constants.ASTRA)
-                        6 -> context.intent(Constants.DRAW)
                         7 -> context.intent(Constants.MY_APPS)
                     }
                 }

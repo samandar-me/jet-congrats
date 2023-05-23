@@ -96,26 +96,6 @@ object ColorObject {
             id = 2,
             title = R.string.share,
             icon = R.drawable.ic_baseline_share
-        ),
-        MenuItem(
-            id = 3,
-            title = R.string.proverb,
-            icon = R.drawable.ic_baseline_local_florist
-        ),
-        MenuItem(
-            id = 4,
-            title = R.string.agatha,
-            icon = R.drawable.ic_baseline_music_note
-        ),
-//        MenuItem(
-//            id = 5,
-//            title = R.string.astra,
-//            icon = R.drawable.ic_baseline_rocket_launch
-//        ),
-        MenuItem(
-            id = 6,
-            title = R.string.draw,
-            icon = R.drawable.ic_baseline_color_lens
         )
     )
 }
